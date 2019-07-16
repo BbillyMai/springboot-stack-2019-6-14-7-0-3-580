@@ -1,11 +1,13 @@
 package com.tw.apistackbase.Resposity;
 
 import com.tw.apistackbase.model.Employee;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class EmployeesResposity {
+
+public class EmployeesRepository2Impl implements EmployeesRepository {
 
     private static Map<String, Employee> employees = new HashMap<>();
 
@@ -27,21 +29,25 @@ public class EmployeesResposity {
         return employee;
     }
 
-    public static List<Employee> findAll() {
+    @Override
+    public List<Employee> findAll() {
         return new ArrayList<Employee>(employees.values());
     }
 
-    public static Employee findById(String employeeId) {
+    @Override
+    public Employee findById(String employeeId) {
         return employees.get(employeeId);
     }
 
-    public static Employee add(Employee employee) {
+    @Override
+    public Employee add(Employee employee) {
         Employee employee1 = createEmployee(employee.getName(), employee.getAge(), employee.getGender());
         employees.put(employee1.getId(), employee1);
         return employee1;
     }
 
-    public static Employee updateById(String employeeId, Employee employee) {
+    @Override
+    public Employee updateById(String employeeId, Employee employee) {
         Employee employee1 = employees.get(employeeId);
         employee1.setName(employee.getName());
         employee1.setGender(employee.getGender());
@@ -49,11 +55,13 @@ public class EmployeesResposity {
         return employee1;
     }
 
-    public static Employee deleteById(String employeeId) {
+    @Override
+    public Employee deleteById(String employeeId) {
         return employees.remove(employeeId);
     }
 
-    public static List<Employee> findByAge(int age) {
+    @Override
+    public List<Employee> findByAge(int age) {
         return new ArrayList<Employee>(employees.values()).stream().
                 filter(employee -> employee.getAge() > age).collect(Collectors.toList());
     }
